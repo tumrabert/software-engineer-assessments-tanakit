@@ -1,0 +1,20 @@
+{
+  "name": "hiring-api-test",
+  "version": "1.0.0",
+  "description": "Node.js coding test",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "prettier --log-level=error --write * && jest"
+  },
+  "author": "BBC News and Weather Apps",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5",
+    "supertest": "^6.3.4"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
