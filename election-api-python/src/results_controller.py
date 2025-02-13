@@ -46,14 +46,17 @@ class ResultsController:
                 if party_name not in scoreboard:
                     scoreboard[party_name] = {"Seats": 0, "Votes": 0, "Share": 0.0}
                 scoreboard[party_name]['Votes'] += party_result['votes']
-
+            
+            #find the winning party for each constituency(เขต) in and increment the seat count
             winning_party = max(result['partyResults'], key=lambda x: x['votes'])
             scoreboard[winning_party['party']]['Seats'] += 1
 
+        #calculate the vote share for each party
         total_votes = sum(party['Votes'] for party in scoreboard.values())
         for party in scoreboard.values():
             party['Share'] = party['Votes'] / total_votes if total_votes > 0 else 0.0
 
+        #find the overall winner, if any party has secured the required number of seats
         winner_party = max(
             (party for party in scoreboard.items() if isinstance(party[1], dict)),
             key=lambda x: x[1]['Seats'],
