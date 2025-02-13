@@ -40,6 +40,9 @@ class TestScoreboard(unittest.TestCase):
         # assert LD == 1
 		# assert LAB = 4
 		# assert winner = noone
+        self.assertEqual(scoreboard['LAB']['Seats'], 4)
+        self.assertEqual(scoreboard['LD']['Seats'], 1)
+        self.assertIsNone(scoreboard['Winner'])
 
     def test_first_100(self) -> None:
         self.load_results(100)
@@ -51,6 +54,10 @@ class TestScoreboard(unittest.TestCase):
 		# assert LAB == 56
 		# assert CON == 31
 		# assert winner = noone
+        self.assertEqual(scoreboard['LAB']['Seats'], 56)
+        self.assertEqual(scoreboard['LD']['Seats'], 12)
+        self.assertEqual(scoreboard['CON']['Seats'], 31)
+        self.assertIsNone(scoreboard['Winner'])
 
     def test_first_554(self) -> None:
         self.load_results(554)
@@ -59,9 +66,13 @@ class TestScoreboard(unittest.TestCase):
         self.assertEqual(status_code, 200, f"non-200 status code received: {status_code}")
         self.assertNotEqual(len(scoreboard), 0)
         # assert LD == 52
-		# assert LAB = 325
-		# assert CON = 167
-		# assert winner = LAB
+        # assert LAB == 325
+        # assert CON == 167
+        # assert winner = LAB
+        self.assertEqual(scoreboard['LAB']['Seats'], 325)
+        self.assertEqual(scoreboard['LD']['Seats'], 52)
+        self.assertEqual(scoreboard['CON']['Seats'], 167)
+        self.assertEqual(scoreboard['Winner'], 'LAB')
 
     def test_all_results(self) -> None:
         self.load_results(650)
@@ -70,10 +81,15 @@ class TestScoreboard(unittest.TestCase):
         self.assertEqual(status_code, 200, f"non-200 status code received: {status_code}")
         self.assertNotEqual(len(scoreboard), 0)
         # assert LD == 62
-		# assert LAB == 349
-		# assert CON == 210
-		# assert winner = LAB
-		# assert sum = 650
+        # assert LAB == 349
+        # assert CON == 210
+        # assert winner = LAB
+        # assert sum = 650
+        self.assertEqual(scoreboard['LAB']['Seats'], 349)
+        self.assertEqual(scoreboard['LD']['Seats'], 62)
+        self.assertEqual(scoreboard['CON']['Seats'], 210)
+        self.assertEqual(scoreboard['Winner'], 'LAB')
+        self.assertEqual(sum(party['Seats'] for party in scoreboard.values() if isinstance(party, dict)), 650)
 
 if __name__ == "__main__":
     unittest.main()
